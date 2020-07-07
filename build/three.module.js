@@ -6122,6 +6122,7 @@ Object3D.prototype = Object.assign( Object.create( EventDispatcher.prototype ), 
 		this.up.copy( source.up );
 
 		this.position.copy( source.position );
+		this.rotation.order = source.rotation.order;
 		this.quaternion.copy( source.quaternion );
 		this.scale.copy( source.scale );
 
@@ -14038,6 +14039,10 @@ WebGLCubeRenderTarget.prototype.fromEquirectangularTexture = function ( renderer
 	this.texture.type = texture.type;
 	this.texture.format = texture.format;
 	this.texture.encoding = texture.encoding;
+
+	this.texture.generateMipmaps = texture.generateMipmaps;
+	this.texture.minFilter = texture.minFilter;
+	this.texture.magFilter = texture.magFilter;
 
 	const scene = new Scene();
 
@@ -23612,6 +23617,7 @@ function WebXRManager( renderer, gl ) {
 	let framebufferScaleFactor = 1.0;
 
 	let referenceSpace = null;
+	let initialReferenceSpace = null;
 	let referenceSpaceType = 'local-floor';
 
 	let pose = null;
@@ -23713,6 +23719,7 @@ function WebXRManager( renderer, gl ) {
 	function onRequestReferenceSpace( value ) {
 
 		referenceSpace = value;
+		initialReferenceSpace = value;
 
 		animation.setContext( session );
 		animation.start();
@@ -23750,6 +23757,18 @@ function WebXRManager( renderer, gl ) {
 	this.getReferenceSpace = function () {
 
 		return referenceSpace;
+
+	};
+
+	this.setOffsetReferenceSpace = function ( value ) {
+
+		referenceSpace = value;
+
+	};
+
+	this.resetReferenceSpace = function () {
+
+		referenceSpace = initialReferenceSpace;
 
 	};
 

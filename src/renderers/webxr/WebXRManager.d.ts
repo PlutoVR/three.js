@@ -12,6 +12,8 @@ export class WebXRManager {
 	setFramebufferScaleFactor( value: number ): void;
 	setReferenceSpaceType( value: string ): void;
 	getReferenceSpace(): any;
+	setOffsetReferenceSpace( value: any ): void;
+	resetReferenceSpace(): void;
 	getSession(): any;
 	setSession( value: any ): void;
 	getCamera( camera: Camera ): Camera;

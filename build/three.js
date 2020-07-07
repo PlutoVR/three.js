@@ -6150,6 +6150,7 @@
 			this.up.copy( source.up );
 
 			this.position.copy( source.position );
+			this.rotation.order = source.rotation.order;
 			this.quaternion.copy( source.quaternion );
 			this.scale.copy( source.scale );
 
@@ -14081,6 +14082,10 @@
 		this.texture.type = texture.type;
 		this.texture.format = texture.format;
 		this.texture.encoding = texture.encoding;
+
+		this.texture.generateMipmaps = texture.generateMipmaps;
+		this.texture.minFilter = texture.minFilter;
+		this.texture.magFilter = texture.magFilter;
 
 		var scene = new Scene();
 
@@ -23614,6 +23619,7 @@
 		var framebufferScaleFactor = 1.0;
 
 		var referenceSpace = null;
+		var initialReferenceSpace = null;
 		var referenceSpaceType = 'local-floor';
 
 		var pose = null;
@@ -23715,6 +23721,7 @@
 		function onRequestReferenceSpace( value ) {
 
 			referenceSpace = value;
+			initialReferenceSpace = value;
 
 			animation.setContext( session );
 			animation.start();
@@ -23752,6 +23759,18 @@
 		this.getReferenceSpace = function () {
 
 			return referenceSpace;
+
+		};
+
+		this.setOffsetReferenceSpace = function ( value ) {
+
+			referenceSpace = value;
+
+		};
+
+		this.resetReferenceSpace = function () {
+
+			referenceSpace = initialReferenceSpace;
 
 		};
 

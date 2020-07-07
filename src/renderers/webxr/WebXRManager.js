@@ -19,6 +19,7 @@ function WebXRManager( renderer, gl ) {
 	let framebufferScaleFactor = 1.0;
 
 	let referenceSpace = null;
+	let initialReferenceSpace = null;
 	let referenceSpaceType = 'local-floor';
 
 	let pose = null;
@@ -120,6 +121,7 @@ function WebXRManager( renderer, gl ) {
 	function onRequestReferenceSpace( value ) {
 
 		referenceSpace = value;
+		initialReferenceSpace = value;
 
 		animation.setContext( session );
 		animation.start();
@@ -157,6 +159,18 @@ function WebXRManager( renderer, gl ) {
 	this.getReferenceSpace = function () {
 
 		return referenceSpace;
+
+	};
+
+	this.setOffsetReferenceSpace = function ( value ) {
+
+		referenceSpace = value;
+
+	};
+
+	this.resetReferenceSpace = function () {
+
+		referenceSpace = initialReferenceSpace;
 
 	};
 
